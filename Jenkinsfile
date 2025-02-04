@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+    agent {
+        label "node-23-7"
+    }
     stages{
         stage('Get Node Version'){
             steps{
