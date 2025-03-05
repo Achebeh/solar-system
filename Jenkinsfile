@@ -10,26 +10,26 @@ pipeline {
 				sh "npm install --no-audit" 
 			}
 		}
-		// stage("Dependencies Check"){
-		// 	parallel{
-		// 		stage("NPM Audit`"){
-		// 			steps{
-		// 				sh "npm audit --audit-level=critical"
-		// 			}
-		// 		}
+		stage("Dependencies Check"){
+			parallel{
+				stage("NPM Audit`"){
+					steps{
+						sh "npm audit --audit-level=critical"
+					}
+				}
 
-		// 		stage("OWASP Dependency Check Vulnerabilities"){
-		// 			steps{
-		// 				dependencyCheck additionalArguments: ''' 
-		// 					-o './'
-		// 					-s  './'
-		// 					-f 'ALL' 
-		// 					--prettyPrint''', odcInstallation: 'owasp-dependcheck-10'
+				// stage("OWASP Dependency Check Vulnerabilities"){
+				// 	steps{
+				// 		dependencyCheck additionalArguments: ''' 
+				// 			-o './'
+				// 			-s  './'
+				// 			-f 'ALL' 
+				// 			--prettyPrint''', odcInstallation: 'owasp-dependcheck-10'
 				
-		// 				dependencyCheckPublisher pattern: 'ALL'
-		// 			}
-		// 		}
-		// 	}
-		// }
+				// 		dependencyCheckPublisher pattern: 'ALL'
+				// 	}
+				// }
+			}
+		}
 	}	
 }
