@@ -25,6 +25,7 @@ pipeline {
 							-s  './'
 							-f 'ALL' 
 							--prettyPrint''', odcInstallation: 'owasp-dependcheck-12'
+						dependencyCheckPublisher failedTotalCritical: 1, pattern: 'dependency-check-report.xml', stopBuild: true
 					}
 				}
 			}
