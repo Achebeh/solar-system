@@ -24,7 +24,7 @@ pipeline {
 							-o './'
 							-s  './'
 							-f 'ALL' 
-							--prettyPrint''', odcInstallation: 'owasp-dependcheck-10'
+							--prettyPrint''', odcInstallation: 'owasp-dependcheck-12'
 					}
 				}
 			}
