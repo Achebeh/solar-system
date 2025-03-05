@@ -18,17 +18,15 @@ pipeline {
 					}
 				}
 
-				// stage("OWASP Dependency Check Vulnerabilities"){
-				// 	steps{
-				// 		dependencyCheck additionalArguments: ''' 
-				// 			-o './'
-				// 			-s  './'
-				// 			-f 'ALL' 
-				// 			--prettyPrint''', odcInstallation: 'owasp-dependcheck-10'
-				
-				// 		dependencyCheckPublisher pattern: 'ALL'
-				// 	}
-				// }
+				stage("OWASP Dependency Check Vulnerabilities"){
+					steps{
+						dependencyCheck additionalArguments: ''' 
+							-o './'
+							-s  './'
+							-f 'ALL' 
+							--prettyPrint''', odcInstallation: 'owasp-dependcheck-10'
+					}
+				}
 			}
 		}
 	}	
