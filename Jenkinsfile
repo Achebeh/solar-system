@@ -33,7 +33,7 @@ pipeline {
 						dependencyCheckPublisher failedTotalCritical: 1, pattern: 'dependency-check-report.xml', stopBuild: true
 
 						// Publish OWASP Dependency Check HTML Report
-						publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, icon: '', keepAll: true, reportDir: './', reportFiles: 'dependency-check-jenkins.html', reportName: 'OWASP HTML Report', reportTitles: '', useWrapperFileDirectly: true])
+						publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, icon: '', keepAll: true, reportDir: '.', reportFiles: 'dependency-check-jenkins.html', reportName: 'OWASP HTML Report', reportTitles: '', useWrapperFileDirectly: true])
 					}
 				}
 			}
