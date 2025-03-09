@@ -34,6 +34,9 @@ pipeline {
 
 						// Publish OWASP Dependency Check HTML Report
 						publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, icon: '', keepAll: true, reportDir: '.', reportFiles: 'dependency-check-jenkins.html', reportName: 'OWASP HTML Report', reportTitles: '', useWrapperFileDirectly: true])
+
+						// Publish OWASP Dependency Check JUnit Report
+						junit allowEmptyResults: true, keepProperties: true, keepTestNames: true, testResults: 'dependency-check-junit.xml'
 					}
 				}
 			}
