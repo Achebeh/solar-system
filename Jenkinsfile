@@ -28,6 +28,10 @@ pipeline {
 							-f 'ALL' 
 							--nvdApiKey $NVD_API_KEY
 							--prettyPrint''', odcInstallation: 'owasp-dependcheck-12'
+						// Publish OWASP Dependency Check HTML Report
+						publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, icon: '', keepAll: true, reportDir: './', reportFiles: 'dependency-check-jenkins.html', reportName: 'OWASP Report', reportTitles: '', useWrapperFileDirectly: true])
+
+						// OWASP Dependency Check Vulnerabilities
 						dependencyCheckPublisher failedTotalCritical: 1, pattern: 'dependency-check-report.xml', stopBuild: true
 					}
 				}
