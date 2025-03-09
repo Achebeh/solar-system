@@ -3,7 +3,9 @@ pipeline {
 	tools {
 		nodejs "nodejs-23-9-0"
 	}
-	
+	environment {
+        NVD_API_KEY = credentials('NVD_Key') 
+    }
 	stages{
 		stage("Install NPM dependencies"){
 			steps{
@@ -24,6 +26,7 @@ pipeline {
 							-o './'
 							-s  './'
 							-f 'ALL' 
+							--nvdApiKey $NVD_API_KEY
 							--prettyPrint''', odcInstallation: 'owasp-dependcheck-12'
 						dependencyCheckPublisher failedTotalCritical: 1, pattern: 'dependency-check-report.xml', stopBuild: true
 					}
