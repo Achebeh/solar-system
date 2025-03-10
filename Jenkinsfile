@@ -5,7 +5,9 @@ pipeline {
 	}
 	environment {
         NVD_API_KEY = credentials('NVD_Key')
-		MONGO_URI = "mongodb://5.tcp.eu.ngrok.io:19988/superData?authSource=admin"
+		MONGO_URI = credentials("MONGO_URI")
+		MONGO_USERNAME = credentials("MONGO_USERNAME")
+		MONGO_PASSWORD = credentials("MONGO_PASSWORD")
     }
 	stages{
 		stage("Install NPM dependencies"){
@@ -42,29 +44,13 @@ pipeline {
 				}
 			}
 		}
-		stage('Check mongosh') {
-            steps {
-                sh 'which mongosh'
-            }
-        }
-		stage('Connect to MongoDB') {
-            steps {
-                withCredentials([usernamePassword(credentialsId: 'mongo-credential', usernameVariable: 'MONGO_USERNAME', passwordVariable: 'MONGO_PASSWORD')]) {
-                    sh '''
-                    echo "Connecting to MongoDB..."
-                    mongosh "$MONGO_URI" --username "$MONGO_USER" --password "$MONGO_PASS"
-                    '''
-                }
-            }
-        }
-		// stage("Unit Testing"){
-		// 	steps{
-		// 		withCredentials([usernamePassword(credentialsId: 'mongo-credential', passwordVariable: 'MONGO_PASSWORD', usernameVariable: 'MONGO_USERNAME')]) {
-		// 			sh "npm test"
-		// 		}
-		// 		// Publish OWASP Dependency Check JUnit Report
-		// 		junit allowEmptyResults: true, skipPublishingChecks: true, testResults: 'test-results.xml'
-		// 	}
-		// }
+		stage("Unit Testing"){
+			options { retry(2) }
+			steps{
+				sh "npm test"
+				// NPM Test JUnit Report
+				junit allowEmptyResults: true, skipPublishingChecks: true, testResults: 'test-results.xml'
+			}
+		}
 	}	
 }
