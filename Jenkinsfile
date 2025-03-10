@@ -44,7 +44,7 @@ pipeline {
 		}
 		stage('Connect to MongoDB') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'MONGO_CREDENTIALS', usernameVariable: 'MONGO_USERNAME', passwordVariable: 'MONGO_PASSWORD')]) {
+                withCredentials([usernamePassword(credentialsId: 'mongo-credential', usernameVariable: 'MONGO_USERNAME', passwordVariable: 'MONGO_PASSWORD')]) {
                     sh '''
                     echo "Connecting to MongoDB..."
                     mongosh "$MONGO_URI" --username "$MONGO_USER" --password "$MONGO_PASS"
