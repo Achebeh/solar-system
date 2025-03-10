@@ -5,7 +5,7 @@ pipeline {
 	}
 	environment {
         NVD_API_KEY = credentials('NVD_Key')
-		// MONGO_URI = credentials("MONGO_URI")
+		MONGO_URI = credentials("MONGO_URI")
 		// MONGO_USERNAME = credentials("MONGO_USERNAME")
 		// MONGO_PASSWORD = credentials("MONGO_PASSWORD")
     }
