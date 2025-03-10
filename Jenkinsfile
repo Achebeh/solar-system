@@ -6,6 +6,8 @@ pipeline {
 	environment {
         NVD_API_KEY = credentials('NVD_Key')
 		MONGO_URI = credentials("MONGO_URI")
+		MONGO_USERNAME = "admin"
+		MONGO_PASSWORD = "password"
 		// MONGO_USERNAME = credentials("MONGO_USERNAME")
 		// MONGO_PASSWORD = credentials("MONGO_PASSWORD")
     }
@@ -46,6 +48,9 @@ pipeline {
 		}
 		stage("Unit Testing"){
 			steps{
+				sh 'echo Colon-Separated - $MONGO_URI'
+                sh 'echo Username - $MONGO_USER'
+                sh 'echo Password - $MONGO_PASSWORD'
 				sh "npm test"
 				// NPM Test JUnit Report
 				junit allowEmptyResults: true, skipPublishingChecks: true, testResults: 'test-results.xml'
