@@ -48,7 +48,7 @@ pipeline {
 					sh "npm test"
 				}
 				// Publish OWASP Dependency Check JUnit Report
-				junit allowEmptyResults: true, keepProperties: true, keepTestNames: true, testResults: 'test-results.xml'
+				junit allowEmptyResults: true, skipPublishingChecks: true, testResults: 'test-results.xml'
 			}
 		}
 	}	
