@@ -5,7 +5,7 @@ pipeline {
 	}
 	environment {
         NVD_API_KEY = credentials('NVD_Key')
-		MONGO_URI = "mongodb://4.tcp.eu.ngrok.io:16744/myDatabase?authSource=admin"
+		MONGO_URI = "mongodb://5.tcp.eu.ngrok.io:19988/superData?authSource=admin"
     }
 	stages{
 		stage("Install NPM dependencies"){
