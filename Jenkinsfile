@@ -45,7 +45,6 @@ pipeline {
 		stage("Unit Testing"){
 			steps{
 				withCredentials([usernamePassword(credentialsId: 'mongo-credential', passwordVariable: 'MONGO_PASSWORD', usernameVariable: 'MONGO_USERNAME')]) {
-					
 					sh "npm test"
 				}
 				// Publish OWASP Dependency Check JUnit Report
