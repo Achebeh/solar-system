@@ -42,6 +42,11 @@ pipeline {
 				}
 			}
 		}
+		stage('Check mongosh') {
+            steps {
+                sh 'which mongosh'
+            }
+        }
 		stage('Connect to MongoDB') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'mongo-credential', usernameVariable: 'MONGO_USERNAME', passwordVariable: 'MONGO_PASSWORD')]) {
