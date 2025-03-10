@@ -4,7 +4,8 @@ pipeline {
 		nodejs "nodejs-23-9-0"
 	}
 	environment {
-        NVD_API_KEY = credentials('NVD_Key') 
+        NVD_API_KEY = credentials('NVD_Key')
+		MONGO_URI = "mongodb://admin:password@5.tcp.eu.ngrok.io:19988/secretData?authSource=admin"
     }
 	stages{
 		stage("Install NPM dependencies"){
@@ -43,9 +44,12 @@ pipeline {
 		}
 		stage("Unit Testing"){
 			steps{
-				withCredentials([string(credentialsId: 'mongo-uri', variable: 'MONGO_URI'), usernamePassword(credentialsId: 'mongo-credential', passwordVariable: 'MONGO_PASSWORD', usernameVariable: 'MONGO_USERNAME')]) {
+				withCredentials([usernamePassword(credentialsId: 'mongo-credential', passwordVariable: 'MONGO_PASSWORD', usernameVariable: 'MONGO_USERNAME')]) {
+					
 					sh "npm test"
 				}
+				// Publish OWASP Dependency Check JUnit Report
+						junit allowEmptyResults: true, keepProperties: true, keepTestNames: true, testResults: 'test-results.xml'
 			}
 		}
 	}	
