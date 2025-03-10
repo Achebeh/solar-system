@@ -5,7 +5,7 @@ pipeline {
 	}
 	environment {
         NVD_API_KEY = credentials('NVD_Key')
-		MONGO_URI = "mongodb://admin:password@5.tcp.eu.ngrok.io:19988/secretData?authSource=admin"
+		MONGO_URI = "mongodb://admin:password11@5.tcp.eu.ngrok.io:19988/secretData?authSource=admin"
     }
 	stages{
 		stage("Install NPM dependencies"){
@@ -48,7 +48,7 @@ pipeline {
 					sh "npm test"
 				}
 				// Publish OWASP Dependency Check JUnit Report
-						junit allowEmptyResults: true, keepProperties: true, keepTestNames: true, testResults: 'test-results.xml'
+				junit allowEmptyResults: true, keepProperties: true, keepTestNames: true, testResults: 'test-results.xml'
 			}
 		}
 	}	
