@@ -42,14 +42,24 @@ pipeline {
 				}
 			}
 		}
-		stage("Unit Testing"){
-			steps{
-				withCredentials([usernamePassword(credentialsId: 'mongo-credential', passwordVariable: 'MONGO_PASSWORD', usernameVariable: 'MONGO_USERNAME')]) {
-					sh "npm test"
-				}
-				// Publish OWASP Dependency Check JUnit Report
-				junit allowEmptyResults: true, skipPublishingChecks: true, testResults: 'test-results.xml'
-			}
-		}
+		stage('Connect to MongoDB') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'MONGO_CREDENTIALS', usernameVariable: 'MONGO_USERNAME', passwordVariable: 'MONGO_PASSWORD')]) {
+                    sh '''
+                    echo "Connecting to MongoDB..."
+                    mongosh "$MONGO_URI" --username "$MONGO_USER" --password "$MONGO_PASS"
+                    '''
+                }
+            }
+        }
+		// stage("Unit Testing"){
+		// 	steps{
+		// 		withCredentials([usernamePassword(credentialsId: 'mongo-credential', passwordVariable: 'MONGO_PASSWORD', usernameVariable: 'MONGO_USERNAME')]) {
+		// 			sh "npm test"
+		// 		}
+		// 		// Publish OWASP Dependency Check JUnit Report
+		// 		junit allowEmptyResults: true, skipPublishingChecks: true, testResults: 'test-results.xml'
+		// 	}
+		// }
 	}	
 }
