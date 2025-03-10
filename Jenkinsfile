@@ -41,7 +41,7 @@ pipeline {
 				}
 			}
 		}
-		stage("NPM Test"){
+		stage("Unit Testing"){
 			steps{
 				withCredentials([string(credentialsId: 'mongo-uri', variable: 'MONGO_URI'), usernamePassword(credentialsId: 'mongo-credential', passwordVariable: 'MONGO_PASSWORD', usernameVariable: 'MONGO_USERNAME')]) {
 					sh "npm test"
