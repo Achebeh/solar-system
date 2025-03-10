@@ -5,9 +5,9 @@ pipeline {
 	}
 	environment {
         NVD_API_KEY = credentials('NVD_Key')
-		MONGO_URI = credentials("MONGO_URI")
-		MONGO_USERNAME = credentials("MONGO_USERNAME")
-		MONGO_PASSWORD = credentials("MONGO_PASSWORD")
+		// MONGO_URI = credentials("MONGO_URI")
+		// MONGO_USERNAME = credentials("MONGO_USERNAME")
+		// MONGO_PASSWORD = credentials("MONGO_PASSWORD")
     }
 	stages{
 		stage("Install NPM dependencies"){
@@ -45,7 +45,6 @@ pipeline {
 			}
 		}
 		stage("Unit Testing"){
-			options { retry(2) }
 			steps{
 				sh "npm test"
 				// NPM Test JUnit Report
