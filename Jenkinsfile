@@ -5,7 +5,8 @@ pipeline {
 	}
 	environment {
         NVD_API_KEY = credentials('NVD_Key')
-		MONGO_URI = credentials("MONGO_URI")
+		// MONGO_URI = credentials("MONGO_URI")
+		MONGO_URI  = "mongodb://5.tcp.eu.ngrok.io:19988/superData?authSource=admin"
 		MONGO_USERNAME = "admin"
 		MONGO_PASSWORD = "password"
 		// MONGO_USERNAME = credentials("MONGO_USERNAME")
@@ -49,7 +50,7 @@ pipeline {
 		stage("Unit Testing"){
 			steps{
 				sh 'echo Colon-Separated - $MONGO_URI'
-                sh 'echo Username - $MONGO_USER'
+                sh 'echo Username - $MONGO_USERNAME'
                 sh 'echo Password - $MONGO_PASSWORD'
 				sh "npm test"
 				// NPM Test JUnit Report
