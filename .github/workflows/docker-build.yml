@@ -7,8 +7,9 @@ on:
     branches:
       - 'dev'
 env:
-  DOCKER_USERNAME: achebeh
-  DOCKER_REPO: achebeh
+  ECR_REPO: lohli
+  # DOCKER_USERNAME: achebeh
+  # DOCKER_REPO: achebeh
   IMAGE_NAME_DEV: solar-system-dev
   IMAGE_NAME_PROD: solar-system
 
@@ -32,26 +33,37 @@ jobs:
             echo "IMAGE_NAME=${{ env.IMAGE_NAME_DEV }}" >> $GITHUB_ENV
           fi
 
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ env.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_TOKEN }}
+      # - name: Log in to Docker Hub
+      #   uses: docker/login-action@v3
+      #   with:
+      #     username: ${{ env.DOCKER_USERNAME }}
+      #     password: ${{ secrets.DOCKER_TOKEN }}
+
+      - name: Configure AWS credentials
+          uses: aws-actions/configure-aws-credentials@v1
+          with:
+            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            aws-region: us-east-1
+
+      - name: Login to Amazon ECR
+          id: login-ecr
+          uses: aws-actions/amazon-ecr-login@v1
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.DOCKER_REPO }}/${{ env.IMAGE_NAME }}
+          images: ${{ env.ECR_REPO }}/${{ env.IMAGE_NAME }}
           tags: |
             type=semver,pattern={{version}}
             type=sha,format=short,suffix=-dev,enable=${{ github.ref == 'refs/heads/dev' }}
             type=ref,event=pr
 
-      - name: Build and push Docker image
+      - name: Push image to GitHub Container Registry
         uses: docker/build-push-action@v5
         with:
           context: .
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: ${{ steps.login-ecr.outputs.registry }}
           labels: ${{ steps.meta.outputs.labels }}
