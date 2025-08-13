@@ -7,7 +7,7 @@ on:
     branches:
       - 'dev'
 env:
-  ECR_REPO: lohli
+  ECR_REPO: achebeh
   # DOCKER_USERNAME: achebeh
   # DOCKER_REPO: achebeh
   IMAGE_NAME_DEV: solar-system-dev
@@ -65,5 +65,5 @@ jobs:
         with:
           context: .
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPO }}
+          tags: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPO }}/{{ env.IMAGE_NAME }}
           labels: ${{ steps.meta.outputs.labels }}
