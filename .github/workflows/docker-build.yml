@@ -9,6 +9,8 @@ on:
 env:
   DOCKER_USERNAME: achebeh
   DOCKER_REPO: achebeh
+  IMAGE_NAME_DEV: solar-system-dev
+  IMAGE_NAME_PROD: solar-system
 
 jobs:
   build-and-push-image:
@@ -24,10 +26,10 @@ jobs:
       - name: Set API URL for branch
         id: set-env
         run: |
-          if [[ "${GITHUB_REF##*/}" == "main" ]]; then
-            echo "IMAGE_NAME=${{ vars.IMAGE_NAME_PROD }}" >> $GITHUB_ENV
-          elif [[ "${GITHUB_REF##*/}" == "dev" ]]; then
-            echo "IMAGE_NAME=${{ vars.IMAGE_NAME_DEV }}" >> $GITHUB_ENV
+          if [[ "${GITHUB_REF_NAME}" == "main" ]]; then
+            echo "IMAGE_NAME=${{ env.IMAGE_NAME_PROD }}" >> $GITHUB_ENV
+          elif [[ "${GITHUB_REF_NAME}" == "dev" ]]; then
+            echo "IMAGE_NAME=${{ env.IMAGE_NAME_DEV }}" >> $GITHUB_ENV
           fi
 
       - name: Log in to Docker Hub
