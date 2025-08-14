@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/Achebeh/solar-system/compare/v1.1.1...v1.2.0) (2025-08-14)
+
+
+### Features
+
+* comment out incorrect planet test case ([2d6a7f2](https://github.com/Achebeh/solar-system/commit/2d6a7f237a1c7f41f3e585ebcbe739b8ef6abe8a))
+
 ## [1.1.1](https://github.com/Achebeh/solar-system/compare/v1.1.0...v1.1.1) (2025-08-07)
 
 
