@@ -55,12 +55,16 @@ jobs:
         with:
           images: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPO }}/${{ env.IMAGE_NAME }}
           tags: |
+            # Main branch: latest, semver, sha
             type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' }}
-            type=semver,pattern={{version}}
-            type=sha,format=short
+            type=semver,pattern={{version}},enable=${{ github.ref == 'refs/heads/main' }}
+            type=sha,format=short,enable=${{ github.ref == 'refs/heads/main' }}
+            # Dev branch: latest-dev, semver-dev, sha-dev
+            type=raw,value=latest${{ env.IMAGE_SUFFIX }},enable=${{ github.ref == 'refs/heads/dev' }}
+            type=semver,pattern={{version}}${{ env.IMAGE_SUFFIX }},enable=${{ github.ref == 'refs/heads/dev' }}
+            type=sha,format=short,prefix=sha-,suffix=${{ env.IMAGE_SUFFIX }},enable=${{ github.ref == 'refs/heads/dev' }}
           flavor: |
             latest=auto
-            suffix=${{ env.IMAGE_SUFFIX }}
 
       - name: Push image to GitHub Container Registry
         uses: docker/build-push-action@v5
