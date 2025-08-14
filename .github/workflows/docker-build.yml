@@ -24,7 +24,7 @@ jobs:
 
       - name: Set image name and suffix based on branch
         run: |
-          if [[ "${GITHUB_REF_NAME}" == "main" ]]; then
+          if [[ "${GITHUB_REF_NAME}" == "main" ]] || [[ "${GITHUB_REF_NAME}" == v[0-9]* ]]; then
             echo "IMAGE_NAME=solar-system" >> $GITHUB_ENV
             echo "IMAGE_SUFFIX=" >> $GITHUB_ENV
           elif [[ "${GITHUB_REF_NAME}" == "dev" ]]; then
