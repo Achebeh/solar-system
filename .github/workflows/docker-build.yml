@@ -54,16 +54,18 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.ECR_REPO }}/${{ env.IMAGE_NAME }}
+          images: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPO }}/${{ env.IMAGE_NAME }}
           tags: |
+            type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' }}
             type=semver,pattern={{version}}
-            type=sha,format=short,suffix=-dev,enable=${{ github.ref == 'refs/heads/dev' }}
-            type=ref,event=pr
+            type=sha,format=short
+          flavor: |
+            suffix=-dev,onlatest=true,enable=${{ github.ref == 'refs/heads/dev' }}
 
       - name: Push image to GitHub Container Registry
         uses: docker/build-push-action@v5
         with:
           context: .
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPO }}/${{ env.IMAGE_NAME }}
+          tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
