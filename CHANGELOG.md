@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.0](https://github.com/Achebeh/solar-system/compare/v1.6.0...v1.7.0) (2025-08-14)
+
+
+### Features
+
+* uncomment and fix Pluto planet test case ([0339e44](https://github.com/Achebeh/solar-system/commit/0339e44a935986e90fb0e1344835caa4fdd46eb6))
+
 ## [1.6.0](https://github.com/Achebeh/solar-system/compare/v1.5.0...v1.6.0) (2025-08-14)
 
 
