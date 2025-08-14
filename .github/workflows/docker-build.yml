@@ -61,7 +61,8 @@ jobs:
             type=sha,format=short
           flavor: |
             latest=auto
-            suffix=-dev,enable=${{ github.ref == 'refs/heads/dev' }}
+            suffix=-dev
+            suffix-enabled=${{ github.ref == 'refs/heads/dev' }}
 
       - name: Push image to GitHub Container Registry
         uses: docker/build-push-action@v5
