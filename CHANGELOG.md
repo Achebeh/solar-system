@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.4.0](https://github.com/Achebeh/solar-system/compare/v1.3.0...v1.4.0) (2025-08-14)
+
+
+### Features
+
+* remove unused docker image names from workflow ([68c16b4](https://github.com/Achebeh/solar-system/commit/68c16b45eda20bd0f9a33ec76ef5caa17d367819))
+* simplify image name configuration in workflow ([3e16c87](https://github.com/Achebeh/solar-system/commit/3e16c878f953e26b573f8802a6158ba60564d8bb))
+
 ## [1.3.0](https://github.com/Achebeh/solar-system/compare/v1.2.0...v1.3.0) (2025-08-14)
 
 
