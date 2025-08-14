@@ -10,8 +10,6 @@ env:
   ECR_REPO: achebeh
   # DOCKER_USERNAME: achebeh
   # DOCKER_REPO: achebeh
-  IMAGE_NAME_DEV: solar-system-dev
-  IMAGE_NAME_PROD: solar-system
 
 jobs:
   build-and-push-image:
