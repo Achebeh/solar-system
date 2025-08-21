@@ -7,7 +7,7 @@ on:
     branches:
       - 'dev'
     paths-ignore:
-      - '.github/workflows/**'
+      # - '.github/workflows/**'
       - '**/README.md'
 env:
   ECR_REPO: achebeh
