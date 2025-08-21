@@ -6,6 +6,9 @@ on:
       - 'v*'
     branches:
       - 'dev'
+    paths-ignore:
+      - '.github/workflows/**'
+      - '**/README.md'
 env:
   ECR_REPO: achebeh
   # DOCKER_USERNAME: achebeh
