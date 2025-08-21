@@ -32,7 +32,7 @@ jobs:
         sudo install -m 0755 /tmp/eksctl /usr/local/bin && rm /tmp/eksctl
 
     - name: Execute eks-install.sh
-      run: bash Prod_EKS_Cluster(eksctl)/eks-install.sh
+      run: bash Prod_EKS_Cluster/eks-install.sh
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -46,7 +46,7 @@ jobs:
         sudo mv kubectl /usr/local/bin/kubectl
         
     - name: Execute nodepool.sh
-      run: bash Prod_EKS_Cluster(eksctl)/nodepool.sh
+      run: bash Prod_EKS_Cluster/nodepool.sh
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
