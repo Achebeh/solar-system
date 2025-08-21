@@ -4,9 +4,9 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'Prod_EKS_Cluster(eksctl)/eks-install.sh'
-      - 'Prod_EKS_Cluster(eksctl)/nodepool.sh'
+    # paths:
+    #   - 'Prod_EKS_Cluster(eksctl)/eks-install.sh'
+    #   - 'Prod_EKS_Cluster(eksctl)/nodepool.sh'
 
 jobs:
   deploy:
@@ -50,4 +50,4 @@ jobs:
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        
+
