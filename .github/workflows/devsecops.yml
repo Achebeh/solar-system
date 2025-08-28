@@ -88,6 +88,7 @@ jobs:
           SLACK_FILE_UPLOAD: "downloaded-artifacts/npm-audit-report.json"
           SLACK_MESSAGE_ON_SUCCESS: "NPM Scan DevSecOps Report"
           SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
+          SLACK_CHANNEL: github
 
   sast:
     name: semgrep/ci
@@ -133,6 +134,7 @@ jobs:
         SLACK_FILE_UPLOAD: "downloaded-artifacts/semgrep-results.json"
         SLACK_MESSAGE_ON_SUCCESS: "Semgrep Scan DevSecOps Report"
         SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
+        SLACK_CHANNEL: github
 
     - name: Slack Notification
       if: ${{ failure() }}
