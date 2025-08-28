@@ -70,6 +70,13 @@ jobs:
           name: sca-reports
           path: npm-audit-report.json
       
+      - name: Download SCA Reports
+        if: always()
+        uses: actions/download-artifact@v4
+        with:
+          name: sca-reports
+          path: downloaded-artifacts
+      
       - name: Slack Notification with Artifact
         if: always()
         uses: rtCamp/action-slack-notify@v2
