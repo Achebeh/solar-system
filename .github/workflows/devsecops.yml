@@ -68,9 +68,7 @@ jobs:
         if: always()
         with:
           name: sca-reports
-          path: |
-            reports
-            npm-audit-report.json
+          path: npm-audit-report.json
       
       - name: Download SCA Reports
         if: always()
@@ -111,19 +109,19 @@ jobs:
       env:
         SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
 
-    - name: Upload SARIF Report
+    - name: Upload Semgrep Report
       uses: actions/upload-artifact@v4
       if: always()
       with:
         name: semgrep-report
         path: semgrep-results.json
 
-    - name: Download SARIF Report
+    - name: Download Semgrep Report
       if: always()
       uses: actions/download-artifact@v4
       with:
         name: semgrep-report
-        path: downloaded-artifacts
+        path: downloaded-artifacts/
 
     - name: Slack Notification with Artifact
       if: always()
