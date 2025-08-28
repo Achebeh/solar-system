@@ -83,8 +83,12 @@ jobs:
         env:
           SLACK_COLOR: ${{ job.status }}
           SLACK_FILE_UPLOAD: "downloaded-artifacts/npm-audit-report.json"
+          SLACK_MESSAGE_ON_SUCCESS: "NPM Scan DevSecOps Report"
           SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
           SLACK_CHANNEL: github
+          SLACK_MESSAGE_ON_FAILURE: "NPM Scan DevSecOps Report"
+          SLACK_MSG_AUTHOR: ${{ github.actor }}
+          MSG_MINIMAL: true
 
   # sast:
   #   name: semgrep/ci
