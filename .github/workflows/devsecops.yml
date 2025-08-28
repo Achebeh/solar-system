@@ -69,82 +69,59 @@ jobs:
         with:
           name: sca-reports
           path: npm-audit-report.json
-      
-      - name: Download SCA Reports
-        if: always()
-        uses: actions/download-artifact@v4
-        with:
-          name: sca-reports
-          path: downloaded-artifacts
-      
-      - name: Slack Notification with Artifact
-        if: always()
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_COLOR: ${{ job.status }}
-          SLACK_MESSAGE_ON_SUCCESS: "NPM Scan DevSecOps Report is available here: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          SLACK_MESSAGE_ON_FAILURE: "NPM Scan DevSecOps Report is available here: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          SLACK_MSG_AUTHOR: ${{ github.actor }}
-          MSG_MINIMAL: true
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
 
-  # sast:
-  #   name: semgrep/ci
-  #   runs-on: ubuntu-latest
-  #   if: >-
-  #     github.actor != 'github-actions[bot]' &&
-  #     !startsWith(github.event.head_commit.message, 'doc:') &&
-  #     !startsWith(github.event.head_commit.message, 'style:') &&
-  #     !startsWith(github.event.head_commit.message, 'ci:') &&
-  #     !startsWith(github.event.head_commit.message, 'refactor:')
-  #   permissions:
-  #     contents: read
-  #   container:
-  #     image: semgrep/semgrep
-  #   steps:
-  #   - uses: actions/checkout@v4
+  sast:
+    name: semgrep/ci
+    runs-on: ubuntu-latest
+    if: >-
+      github.actor != 'github-actions[bot]' &&
+      !startsWith(github.event.head_commit.message, 'doc:') &&
+      !startsWith(github.event.head_commit.message, 'style:') &&
+      !startsWith(github.event.head_commit.message, 'ci:') &&
+      !startsWith(github.event.head_commit.message, 'refactor:')
+    permissions:
+      contents: read
+    container:
+      image: semgrep/semgrep
+    steps:
+    - uses: actions/checkout@v4
 
-  #   - name: Run semgrep
-  #     run: semgrep scan --error --json-output=semgrep-results.json
-  #     env:
-  #       SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
+    - name: Run semgrep
+      run: semgrep scan --error --json-output=semgrep-results.json
+      env:
+        SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
 
-  #   - name: Upload Semgrep Report
-  #     uses: actions/upload-artifact@v4
-  #     if: always()
-  #     with:
-  #       name: semgrep-report
-  #       path: semgrep-results.json
+    - name: Upload Semgrep Report
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: semgrep-report
+        path: semgrep-results.json
 
-  #   - name: Download Semgrep Report
-  #     if: always()
-  #     uses: actions/download-artifact@v4
-  #     with:
-  #       name: semgrep-report
-  #       path: downloaded-artifacts/
+    - name: Slack Notification
+      if: ${{ failure() }}
+      uses: rtCamp/action-slack-notify@v2
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+        SLACK_COLOR: ${{ job.status }}
+        SLACK_MESSAGE_ON_FAILURE: "DevSecOps Pipeline failed!"
 
-  #   - name: Slack Notification with Artifact
-  #     if: always()
-  #     uses: rtCamp/action-slack-notify@v2
-  #     env:
-  #       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
-  #       SLACK_COLOR: ${{ job.status }}
-  #       SLACK_FILE_UPLOAD: "downloaded-artifacts/semgrep-results.json"
-  #       SLACK_MESSAGE_ON_SUCCESS: "Semgrep Scan DevSecOps Report"
+    - name: Slack Notification
+      if: ${{ success() }}
+      uses: rtCamp/action-slack-notify@v2
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+        SLACK_COLOR: ${{ job.status }}
+        SLACK_MESSAGE_ON_SUCCESS: "DevSecOps Pipeline was successful!"
 
-  #   - name: Slack Notification
-  #     if: ${{ failure() }}
-  #     uses: rtCamp/action-slack-notify@v2
-  #     env:
-  #       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
-  #       SLACK_COLOR: ${{ job.status }}
-  #       SLACK_MESSAGE_ON_FAILURE: "DevSecOps Pipeline failed!"
-
-  #   - name: Slack Notification
-  #     if: ${{ success() }}
-  #     uses: rtCamp/action-slack-notify@v2
-  #     env:
-  #       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
-  #       SLACK_COLOR: ${{ job.status }}
-  #       SLACK_MESSAGE_ON_SUCCESS: "DevSecOps Pipeline was successful!"
+    - name: Slack Notification with Artifact Link
+      if: always()
+      uses: rtCamp/action-slack-notify@v2
+      env:
+        SLACK_COLOR: ${{ job.status }}
+        SLACK_MESSAGE_ON_SUCCESS: "Get DevSecOps Reports here: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+        SLACK_MESSAGE_ON_FAILURE: "Get DevSecOps Reports here: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+        SLACK_MSG_AUTHOR: ${{ github.actor }}
+        MSG_MINIMAL: true
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
         
