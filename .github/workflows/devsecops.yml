@@ -85,9 +85,9 @@ jobs:
           SLACK_COLOR: ${{ job.status }}
           SLACK_CHANNEL: github
           SLACK_MESSAGE_ON_SUCCESS: "NPM Scan DevSecOps Report is available here: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-        SLACK_MESSAGE_ON_FAILURE: "NPM Scan DevSecOps Report is available here: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-        SLACK_MSG_AUTHOR: ${{ github.actor }}
-        MSG_MINIMAL: true
+          SLACK_MESSAGE_ON_FAILURE: "NPM Scan DevSecOps Report is available here: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          SLACK_MSG_AUTHOR: ${{ github.actor }}
+          MSG_MINIMAL: true
 
   # sast:
   #   name: semgrep/ci
