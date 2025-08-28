@@ -2,7 +2,7 @@ name: DevSecOps Pipeline
 
 on:
   push:
-    branches: [ feat/*, fix/* ]
+    branches: [ feat/*, fix/*, dev ]
     paths-ignore:
       # - '.github/workflows/**'
       - '**/README.md'
