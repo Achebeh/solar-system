@@ -70,24 +70,18 @@ jobs:
           name: sca-reports
           path: npm-audit-report.json
       
-      - name: Download SCA Reports
-        if: always()
-        uses: actions/download-artifact@v4
-        with:
-          name: sca-reports
-          path: downloaded-artifacts
-      
       - name: Slack Notification with Artifact
         if: always()
         uses: rtCamp/action-slack-notify@v2
         env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
           SLACK_COLOR: ${{ job.status }}
           SLACK_FILE_UPLOAD: "downloaded-artifacts/npm-audit-report.json"
           SLACK_MESSAGE_ON_SUCCESS: "NPM Scan DevSecOps Report"
           SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
           SLACK_CHANNEL: github
           SLACK_MESSAGE_ON_FAILURE: "NPM Scan DevSecOps Report"
+          SLACK_MSG_AUTHOR: ${{ github.actor }}
+          MSG_MINIMAL: true
 
   sast:
     name: semgrep/ci
