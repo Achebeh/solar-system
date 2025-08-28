@@ -99,11 +99,20 @@ jobs:
         path: semgrep-results.json
 
     - name: Slack Notification
+      if: ${{ failure() }}
       uses: rtCamp/action-slack-notify@v2
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
         SLACK_COLOR: ${{ job.status }}
-        SLACK_MESSAGE: ${{ job.status == 'success' && 'DevSecOps Pipeline was successful!' || 'DevSecOps Pipeline failed!' }}
+        SLACK_MESSAGE_ON_FAILURE: "DevSecOps Pipeline failed!"
+
+    - name: Slack Notification
+      if: ${{ success() }}
+      uses: rtCamp/action-slack-notify@v2
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+        SLACK_COLOR: ${{ job.status }}
+        SLACK_MESSAGE_ON_SUCCESS: "DevSecOps Pipeline was successful!"
 
     - name: Slack Notification with Artifact Link
       if: always()
