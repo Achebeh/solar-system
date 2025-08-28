@@ -91,4 +91,4 @@ jobs:
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
           SLACK_COLOR: ${{ job.status }}
-          SLACK_MESSAGE_ON_SUCCESS: "Workflow succeeded! Check the run here: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          SLACK_MESSAGE_ON_SUCCESS: "Docker image build was successful! Check the deployment here: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
