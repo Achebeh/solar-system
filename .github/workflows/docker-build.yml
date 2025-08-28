@@ -7,7 +7,7 @@ on:
     branches:
       - 'dev'
     paths-ignore:
-      - '.github/workflows/**'
+      # - '.github/workflows/**'
       - '**/README.md'
 env:
   ECR_REPO: achebeh
@@ -78,17 +78,13 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
 
       - name: Slack Notification
-        if: ${{ failure() }}
+        if: always() # Ensures this runs regardless of success/failure
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
           SLACK_COLOR: ${{ job.status }}
-          SLACK_MESSAGE_ON_FAILURE: "Workflow failed! Check the run here: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-
-      - name: Slack Notification
-        if: ${{ success() }}
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
-          SLACK_COLOR: ${{ job.status }}
-          SLACK_MESSAGE_ON_SUCCESS: "Docker image build was successful! Check the deployment here: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          SLACK_MESSAGE: |
+            Docker image build *${{ job.status }}* :whale:
+            - Actor: <${{ github.server_url }}/${{ github.actor }}|${{ github.actor }}>
+            - Repository: ${{ github.repository }}
+            - Run: <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Logs>
