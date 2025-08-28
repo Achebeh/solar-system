@@ -87,6 +87,7 @@ jobs:
           SLACK_MESSAGE_ON_SUCCESS: "NPM Scan DevSecOps Report"
           SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
           SLACK_CHANNEL: github
+          SLACK_MESSAGE_ON_FAILURE: "NPM Scan DevSecOps Report"
 
   sast:
     name: semgrep/ci
