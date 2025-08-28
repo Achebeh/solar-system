@@ -87,6 +87,7 @@ jobs:
           SLACK_COLOR: ${{ job.status }}
           SLACK_FILE_UPLOAD: "downloaded-artifacts/npm-audit-report.json"
           SLACK_MESSAGE_ON_SUCCESS: "NPM Scan DevSecOps Report"
+          SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
 
   sast:
     name: semgrep/ci
@@ -131,6 +132,7 @@ jobs:
         SLACK_COLOR: ${{ job.status }}
         SLACK_FILE_UPLOAD: "downloaded-artifacts/semgrep-results.json"
         SLACK_MESSAGE_ON_SUCCESS: "Semgrep Scan DevSecOps Report"
+        SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
 
     - name: Slack Notification
       if: ${{ failure() }}
@@ -138,7 +140,7 @@ jobs:
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
         SLACK_COLOR: ${{ job.status }}
-        SLACK_MESSAGE_ON_FAILURE: "DevSecOps Pipeline failed! Check the reports here: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} or in the github slack channel."
+        SLACK_MESSAGE_ON_FAILURE: "DevSecOps Pipeline failed!"
 
     - name: Slack Notification
       if: ${{ success() }}
@@ -146,4 +148,5 @@ jobs:
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
         SLACK_COLOR: ${{ job.status }}
-        SLACK_MESSAGE_ON_SUCCESS: "DevSecOps Pipeline was successful! Check the deployment here: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+        SLACK_MESSAGE_ON_SUCCESS: "DevSecOps Pipeline was successful!"
+        
