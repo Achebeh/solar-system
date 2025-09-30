@@ -56,7 +56,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: docker.io${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}
+          images: docker.io/${{ env.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}
           tags: |
             # Main branch: latest, semver, sha
             type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' }}
